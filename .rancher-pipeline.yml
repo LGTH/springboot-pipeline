@@ -1,0 +1,20 @@
+stages:
+- name: complie
+  steps:
+  - runScriptConfig:
+      image: 192.168.56.102:5000/maven:3.6.0-jdk-8-alpine
+      shellScript: mvn clean package -Dmaven.test.skip=true
+- name: public
+  steps:
+  - publishImageConfig:
+      dockerfilePath: ./Dockerfile
+      buildContext: .
+      tag: 192.168.56.102:5000/helloApp:v${CICD_EXECUTION_SEQUENCE}
+      pushRemote: true
+      registry: 192.168.56.102:5000
+- name: deployment
+  steps:
+  - applyYamlConfig:
+      path: ./deployment.yaml
+timeout: 60
+notification: {}
