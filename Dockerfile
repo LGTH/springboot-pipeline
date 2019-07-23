@@ -1,4 +1,4 @@
-FROM java:8
+FROM 192.168.56.102:5000/java:8
 ADD target/pipeline-0.0.1-SNAPSHOT.jar /app/app.jar
 WORKDIR /app/
 EXPOSE 8080
